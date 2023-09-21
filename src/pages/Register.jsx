@@ -107,7 +107,7 @@ const Register = () => {
         >
           <h2 className='text-md md:text-xl font-semibold mb-6 text-center text-slate-100'>
             Signup{" "}
-            <span className='text-xl md:text-3xl font-extrabold text-emerald-600 tracking-widest'>
+            <span className='text-xl md:text-3xl font-extrabold text-gradient tracking-widest'>
               Tipgram
             </span>{" "}
           </h2>
