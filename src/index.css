@@ -15,18 +15,26 @@
     color: transparent;
   }
 
-/* This styles the scrollbar track (background) */
-.custom-scrollbar::-webkit-scrollbar-track {
-    background: #1f462ecb; /* Set the background color */
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
   }
   
-  /* This styles the scrollbar thumb (handle) */
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #1b502fc7; /* Set the color of the thumb */
-    border-radius: 6px; /* Add rounded corners to the thumb */
+    background-color: #006e1c;
+    transition: ease-in-out;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #09ad32;
   }
   
-  /* This styles the scrollbar thumb on hover */
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: #173d26ce; /* Set the color on hover */
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #000c24;
+  }
+
+  .EmojiPickerReact {
+    background-color: #001027;
+    box-shadow: 0 10px 12px #00b368;
+    border : none
   }

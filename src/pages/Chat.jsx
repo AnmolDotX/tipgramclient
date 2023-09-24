@@ -1,29 +1,38 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { contactUsersRoute } from "../utils/APIRoutes";
+import { contactUsersRoute, host } from "../utils/APIRoutes";
 import Contact from "../components/Contact";
 import Welcome from "../components/Welcome";
 import ChatContainer from "../components/ChatContainer";
+import { io } from "socket.io-client";
 
 const Chat = () => {
+  const socket = useRef();
   const navigate = useNavigate();
   const [contacts, setContacts] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
   const [currentChat, setCurrentChat] = useState(undefined);
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const checkUser = async () => {
-      if (!localStorage.getItem("tipgramUser")) {
+      if (await !localStorage.getItem("tipgramUser")) {
         navigate("/login");
       } else {
         setCurrentUser(await JSON.parse(localStorage.getItem("tipgramUser")));
-        setIsLoaded(true)
+        setIsLoaded(true);
       }
     };
     checkUser();
   }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io(host);
+      socket.current.emit("add-user", currentUser._id);
+    }
+  }, [currentUser]);
 
   useEffect(() => {
     const checkCurrentUser = async () => {
@@ -63,8 +72,12 @@ const Chat = () => {
         <div className=' md:col-span-2 lg:col-span-3 hidden md:block'>
           {isLoaded && currentChat === undefined ? (
             <Welcome currentUser={currentUser} />
-          ) : ( 
-            <ChatContainer currentChat={currentChat} />
+          ) : (
+            <ChatContainer
+              currentChat={currentChat}
+              currentUser={currentUser}
+              socket={socket}
+            />
           )}
         </div>
       </div>

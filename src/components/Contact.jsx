@@ -51,7 +51,7 @@ const Contact = ({ contacts, currentUser, changeChat }) => {
                       : "flex items-center gap-5 min-h-[3.5rem] w-[90%] bg-slate-950 backdrop-filter backdrop-blur-md bg-opacity-95 px-2 py-1 rounded-xl shadow-md shadow-black hover:bg-opacity-80 hover:bg-slate-900 active:shadow-lg active:shadow-black transition-all cursor-pointer"
                   }`}
                 >
-                  <div id='avatar'>
+                  <div id='avatar' className="flex items-center justify-center">
                     <img
                       className='h-8 rounded-full border-2 w-8 text-center border-emerald-700'
                       src={`data:image/svg+xml;base64,${contact?.avatarImage}`}
