@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginRoute } from "../utils/APIRoutes";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import Loader from '../assets/loader.gif'
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -18,6 +19,7 @@ const Login = () => {
     theme: "dark",
   };
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate();
   // const location = useLocation();
   // const {registrationSuccess} = location.state || {};
@@ -54,6 +56,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true)
       if (handleValidation()) {
         const { username, password } = values;
         const { data } = await axios.post(loginRoute, {
@@ -67,6 +70,7 @@ const Login = () => {
           // localStorage.setItem("tipgramUser", JSON.stringify(data.user));
           localStorage.setItem("tipgramUser", JSON.stringify(data.user));
           navigate("/");
+          setIsLoading(false)
         }
       }
     } catch (error) {
@@ -137,9 +141,9 @@ const Login = () => {
 
           <button
             type='submit'
-            className='bg-green-900 text-white py-2 px-4 mb-3 rounded hover:bg-blue-600 w-full'
+            className='flex items-center justify-center gap-5 bg-green-900 text-white py-2 px-4 mb-3 rounded hover:bg-blue-600 w-full'
           >
-            Login
+            Login {isLoading ? <img className="h-5" src={Loader} alt="...load" /> : ""}
           </button>
           <span className='text-center'>
             New user?{" "}

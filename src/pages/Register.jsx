@@ -5,11 +5,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { registerRoute } from "../utils/APIRoutes";
+import Loader from '../assets/loader.gif'
 
 const Register = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const [values, setValues] = useState({
     username: "",
@@ -66,6 +68,7 @@ const Register = () => {
     const { username, email, password } = values;
     e.preventDefault();
     try {
+      setIsLoading(true)
       if (handleValidation()) {
         const { data } = await axios.post(registerRoute, {
           username,
@@ -79,6 +82,7 @@ const Register = () => {
           localStorage.setItem("tipgramUser", JSON.stringify(data.user));
           // navigate("/login", {state : {registrationSuccess : true}});
           navigate("/login");
+          setIsLoading(false)
         }
       }
     } catch (error) {
@@ -197,9 +201,9 @@ const Register = () => {
 
           <button
             type='submit'
-            className='bg-green-900 text-white py-2 px-4 mb-3 rounded hover:bg-blue-600 w-full'
+            className='bg-green-900 flex items-center justify-center gap-5 text-white py-2 px-4 mb-3 rounded hover:bg-blue-600 w-full'
           >
-            Register
+            Register {isLoading ? <img className="h-5" src={Loader} alt="...load" /> : ""}
           </button>
           <span className='text-center'>
             Already a user?{" "}
