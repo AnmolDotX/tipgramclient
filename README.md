@@ -48,10 +48,10 @@ cd tipgramClient
 
 ### provide backend host
 
-Open the src/utils/APIRoutes.js and replace the host variable value with the localhost server of you backend, something like "http://localhost:8000"
+create a .env file and add an environment variable with the name VITE_BACKEND_HOST, and give it the value of your local backend server like this "http://localhost:8000"
 
 ```bash
-export const host = "http://localhost:8000";
+VITE_BACKEND_HOST = "http://localhost:8000"
 ```
 
 ### Install Dependencies
