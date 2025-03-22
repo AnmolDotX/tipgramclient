@@ -92,25 +92,32 @@ const Contact = ({ contacts, currentUser, changeChat }) => {
                       </span>
                     ) : (
                       <img
-                        className="h-8 rounded-full border-2 w-8 text-center border-emerald-700"
+                        className="h-8 rounded-full border-2 w-8 text-center border-emerald-700 aspect-square"
                         src={`data:image/svg+xml;base64,${contact?.avatarImage}`}
                         alt={`${contact?.username[0]?.toUpperCase()}`}
                         onError={() => setUserAvatarError(true)}
                       />
                     )}
                   </div>
-                  <div id="username">
-                    <h3 className="text-white font-medium text-xs">
-                      {contact?.username}
-                    </h3>
-                  </div>
+                  <div
+                    id="username"
+                    className="flex flex-col items-start w-full relative overflow-hidden"
+                  >
+                    <div className="w-full flex items-center justify-between">
+                      <h3 className="text-white font-medium text-xs">
+                        {contact?.username}
+                      </h3>
+                      {contact?.unreadCount > 0 && (
+                        <span className="h-5 w-5 text-xs flex items-center justify-center rounded-full aspect-square bg-emerald-300/70 text-emerald-950 absolute right-0 top-0 ">
+                          {contact?.unreadCount}
+                        </span>
+                      )}
+                    </div>
 
-                  {contact.unreadCount > 0 && (
-                    <div className="unread-badge">{contact.unreadCount}</div>
-                  )}
-                  <div className="last-message">
-                    {contact.lastMessage?.text && (
-                      <p>{contact.lastMessage.text.substring(0, 20)}...</p>
+                    {contact?.lastMessage?.text && (
+                      <p className="w-[70%] whitespace-nowrap truncate text-xs text-emerald-500 font-light">
+                        {contact?.lastMessage?.text}
+                      </p>
                     )}
                   </div>
                 </div>
