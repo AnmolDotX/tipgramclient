@@ -1,5 +1,4 @@
 export const host = import.meta.env.VITE_BACKEND_HOST;
-// console.log(host);
 
 export const registerRoute = `${host}/api/auth/register`;
 export const loginRoute = `${host}/api/auth/login`;

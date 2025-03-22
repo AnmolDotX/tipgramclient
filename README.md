@@ -26,6 +26,7 @@ This is a real-time chat application built using the MERN (MongoDB, Express.js, 
 You can access the live demo of this chat app at [Live Demo Link](https://tipgram.netlify.app/).
 
 ## Screenshots
+
 ![Welcome page](./src/assets/tipgramWelcome.png)
 
 ![Chat panel](./src/assets/tipgramChat.png)

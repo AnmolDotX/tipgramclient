@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { contactUsersRoute, host } from "../utils/APIRoutes";
 import Contact from "../components/Contact";
@@ -57,19 +57,19 @@ const Chat = () => {
 
   // console.log(contacts);
   return (
-    <div className='h-screen w-screen flex flex-col justify-center items-center gap-4'>
+    <div className="h-screen w-screen flex flex-col justify-center items-center gap-4">
       <div
-        id='container'
-        className='h-screen w-screen md:h-[85vh] md:w-[85vw] bg-slate-950 text-white bg-opacity-75 backdrop-blur-xl backdrop-filter md:grid md:grid-cols-3 lg:grid-cols-4 rounded-lg'
+        id="container"
+        className="h-screen w-screen md:h-[85vh] md:w-[85vw] bg-slate-950 text-white bg-opacity-75 backdrop-blur-xl backdrop-filter md:grid md:grid-cols-3 lg:grid-cols-4 rounded-lg"
       >
-        <div className='md:col-span-1 md:overflow-hidden'>
+        <div className="md:col-span-1 md:overflow-hidden">
           <Contact
             contacts={contacts}
             currentUser={currentUser}
             changeChat={handleChatChange}
           />
         </div>
-        <div className=' md:col-span-2 lg:col-span-3 hidden md:block'>
+        <div className=" md:col-span-2 lg:col-span-3 hidden md:block">
           {isLoaded && currentChat === undefined ? (
             <Welcome currentUser={currentUser} />
           ) : (
