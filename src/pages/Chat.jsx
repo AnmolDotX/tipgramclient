@@ -6,6 +6,7 @@ import Contact from "../components/Contact";
 import Welcome from "../components/Welcome";
 import ChatContainer from "../components/ChatContainer";
 import { io } from "socket.io-client";
+import { toast } from "react-toastify";
 
 const Chat = () => {
   const socket = useRef();
@@ -37,15 +38,14 @@ const Chat = () => {
   useEffect(() => {
     const checkCurrentUser = async () => {
       if (currentUser) {
-        if (currentUser.isAvatarImageSet) {
-          const resp = await axios.get(
-            `${contactUsersRoute}/${currentUser._id}`
-          );
-          setContacts(resp?.data);
-          // console.log(resp);
-        } else {
-          navigate("/setAvatar");
+        const resp = await axios.get(`${contactUsersRoute}/${currentUser._id}`);
+        if (!resp?.data?.status) {
+          toast.error(resp?.data?.msg);
+          return;
         }
+        console.log(resp?.data?.contacts);
+
+        setContacts(resp?.data?.contacts);
       }
     };
     checkCurrentUser();
@@ -77,6 +77,7 @@ const Chat = () => {
               currentChat={currentChat}
               currentUser={currentUser}
               socket={socket}
+              setContacts={setContacts}
             />
           )}
         </div>

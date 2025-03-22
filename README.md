@@ -4,6 +4,14 @@
 
 This is a real-time chat application built using the MERN (MongoDB, Express.js, React, Node.js) stack. It leverages WebSocket technology to enable real-time messaging between users.
 
+## Testing user name
+
+- username : test2
+- password : test2@1234
+
+- username : admin
+- password : admin@123
+
 ## Features
 
 - Real-time messaging using WebSockets.

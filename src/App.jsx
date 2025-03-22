@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Chat from "./pages/Chat";
-import SetAvatar from "./pages/SetAvatar";
 import ChatContainer from "./components/ChatContainer";
 import bgvideo from "./assets/bgvideo.mp4";
 
@@ -23,7 +22,6 @@ const App = () => {
         <Route path="/currentChat" element={<ChatContainer />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/setAvatar" element={<SetAvatar />} />
       </Routes>
     </div>
   );
