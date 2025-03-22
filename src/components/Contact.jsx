@@ -14,15 +14,6 @@ const Contact = ({ contacts, currentUser, changeChat }) => {
   const [sortedContacts, setSortedContacts] = useState([]);
 
   useEffect(() => {
-    const sorted = [...contacts].sort((a, b) => {
-      const aTime = a.lastMessage?.createdAt || 0;
-      const bTime = b.lastMessage?.createdAt || 0;
-      return new Date(bTime) - new Date(aTime);
-    });
-    setSortedContacts(sorted);
-  }, [contacts]);
-
-  useEffect(() => {
     // console.log(contacts);
     if (currentUser) {
       setCurrentUserImage(currentUser?.avatarImage);
@@ -48,6 +39,19 @@ const Contact = ({ contacts, currentUser, changeChat }) => {
     setSortedContacts(updatedContacts);
     changeChat(contact);
   };
+
+  useEffect(() => {
+    const sorted = [...contacts].sort((a, b) => {
+      const aTime = a.lastMessage?.createdAt
+        ? new Date(a.lastMessage.createdAt)
+        : 0;
+      const bTime = b.lastMessage?.createdAt
+        ? new Date(b.lastMessage.createdAt)
+        : 0;
+      return bTime - aTime;
+    });
+    setSortedContacts(sorted);
+  }, [contacts]);
 
   return (
     <>

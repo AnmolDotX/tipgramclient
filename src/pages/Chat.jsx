@@ -43,7 +43,6 @@ const Chat = () => {
           toast.error(resp?.data?.msg);
           return;
         }
-        console.log(resp?.data?.contacts);
 
         setContacts(resp?.data?.contacts);
       }

@@ -27,42 +27,56 @@ const ChatContainer = ({ currentChat, currentUser, socket, setContacts }) => {
   }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
-    await axios.post(sendMessageRoute, {
-      from: currentUser?._id,
-      to: currentChat?._id,
+    const { data } = await axios.post(sendMessageRoute, {
+      from: currentUser._id,
+      to: currentChat._id,
       message: msg,
     });
 
-    await socket?.current?.emit("send-msg", {
-      from: currentUser?._id,
-      to: currentChat?._id,
+    console.log("after msg send----->", data);
+
+    socket.current.emit("send-msg", {
+      to: currentChat._id,
+      from: currentUser._id,
       message: msg,
+      sender: currentUser._id, // Add sender ID
     });
 
-    const msgs = [...messages];
-    msgs.push({ fromSelf: true, message: msg });
-    setMessages(msgs);
+    // Update local state
+    setMessages((prev) => [
+      ...prev,
+      {
+        fromSelf: true,
+        message: msg,
+        createdAt: new Date().toISOString(),
+      },
+    ]);
   };
 
+  // Fix socket message handling
   useEffect(() => {
     if (socket.current) {
-      socket.current.on("msg-receive", (msg) => {
-        setArrivalMessage({ fromSelf: false, message: msg });
+      socket.current.on("msg-receive", (data) => {
+        setArrivalMessage({ fromSelf: false, message: data.message });
 
-        // Update contacts list if not in current chat
-        if (currentChat?._id !== msg.sender) {
-          setContacts((prev) =>
-            prev.map((contact) =>
-              contact._id === msg.sender
-                ? {
-                    ...contact,
-                    unreadCount: contact.unreadCount + 1,
-                    lastMessage: { text: msg.message, createdAt: new Date() },
-                  }
-                : contact
-            )
-          );
-        }
+        setContacts((prev) =>
+          prev.map((contact) => {
+            if (contact._id === data.sender) {
+              return {
+                ...contact,
+                unreadCount:
+                  contact._id === currentChat?._id
+                    ? 0
+                    : contact.unreadCount + 1,
+                lastMessage: {
+                  text: data.message,
+                  createdAt: new Date().toISOString(),
+                },
+              };
+            }
+            return contact;
+          })
+        );
       });
     }
   }, [currentChat]);
